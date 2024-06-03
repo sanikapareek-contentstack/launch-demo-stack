@@ -35,11 +35,15 @@ export default function Page(props: Props) {
   );
 }
 
-export async function getServerSideProps({params}: any) {
+export async function getServerSideProps({params, res}: any) {
   try {
       const entryUrl = params.page.includes('/') ? params.page:`/${params.page}`
       const entryRes = await getPageRes(entryUrl);
       if (!entryRes) throw new Error('404');
+      res.setHeader(
+        'Cache-Control',
+        'private, max-age=0, s-maxage=86400, stale-while-revalidate=59'
+      );
       return {
         props: {
           entryUrl: entryUrl,

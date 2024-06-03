@@ -34,6 +34,10 @@ export const getServerSideProps = async ({ res }: {res: Context}) => {
   `;
 
   res.setHeader('Content-Type', 'text/xml');
+  res.setHeader(
+    'Cache-Control',
+    'private, max-age=0, s-maxage=86400, stale-while-revalidate=59'
+  );
   res.write(sitemap);
   res.end();
 
