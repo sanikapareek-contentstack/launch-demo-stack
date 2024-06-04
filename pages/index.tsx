@@ -40,6 +40,8 @@ export default function Home(props: Props) {
 export async function getServerSideProps(context: Context) {
   try {
     const entryRes = await getPageRes(context.resolvedUrl);
+    context.res.setHeader('Cache-Control', 'private, max-age=0, s-maxage=86400, stale-while-revalidate=59');
+    
     return {
       props: {
         entryUrl: context.resolvedUrl,

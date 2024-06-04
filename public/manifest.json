@@ -4,7 +4,7 @@
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
-    "name": "Contentstack-Nextjs-Starter-App",
+    "name": "Launch Edge Device Adaptation",
     "short_name": "Starter-App",
     "description": "Starter app for nextjs and contentstack integration",
     "icons": [
