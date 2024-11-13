@@ -2,7 +2,10 @@ const mobileHost = "edge-device-adaptation-mobile.contentstackapps.com";
 const webHost = "edge-device-adaptation.contentstackapps.com";
 
 export default async function handler(request) {
-  const userAgentHeader = request.headers.get('User-Agent');
+  const clonedHeaders = new Headers(request.headers);
+  console.log("clonedHeaders", clonedHeaders)
+  const userAgentHeader = clonedHeaders.get('User-Agent');
+  console.log("userAgentHeaders", userAgentHeader);
   const modifiedUrl = new URL(request.url);
   if (isMobile(userAgentHeader)) {
     modifiedUrl.hostname = mobileHost;
@@ -10,7 +13,13 @@ export default async function handler(request) {
     modifiedUrl.hostname = webHost;
   }
 
-  const newRequest = new Request(modifiedUrl, request);
+  const newRequest = new Request(
+    modifiedUrl, 
+    {
+      ...request,
+      headers: clonedHeaders,
+    }
+  );
   return fetch(newRequest);
 }
 
